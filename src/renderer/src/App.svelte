@@ -1,24 +1,33 @@
 <script>
 	import TodoList from '@/lib/TodoList.svelte';
-	import ItemInput from '@/lib/ItemInput.svelte';
+    import EventPropertyInputs from './lib/EventPropertyInputs.svelte';
 
-	let items = ["First task", "Second task", "Third task"];
+	let events = [];
 
-	function addItem(item) {
-		items = [...items, item];
-	}
-	function editItem(index, value){
-		items[index] = value;
-	}
-	function removeItem(index) {
-		if(!confirm("Do you want to delete?")) return;
-		items = items.filter((_, i) => i !== index);
+	const addEvent = (event) => {
+		event.id = Math.floor(Date.now() * Math.random());
+
+		const timeBetween = event.reminderTimestamp - Date.now();
+
+		event.reminderTimeout = setTimeout(() => {
+			NotificationUtils.showNotification(event.name, event.message);
+			event.expired = true;
+			events = events;
+		}, timeBetween);
+
+		events = [...events, event];
+	};
+
+	const deleteEvent = (id) => {
+		const deletedEvent = events.find(event => event.id === id);
+		clearTimeout(deletedEvent.reminderTimeout);
+		events = events.filter(event => event.id !== id);
 	}
 </script>
 
 <main>
-	<ItemInput onAdd={addItem} />
-	<TodoList {items} onEdit={editItem} onRemove={removeItem} />
+	<EventPropertyInputs handleAddEvent="{addEvent}" />
+	<TodoList events={events} handleDeleteEvent={deleteEvent} />
 </main>
 
 <style>

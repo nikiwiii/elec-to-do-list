@@ -1,12 +1,43 @@
 // This file is the entry point for the Electron application.
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, Notification, Tray, Menu } = require('electron')
+const path = require('path')
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
   })
+
+  ipcMain.handle('SHOW_DIALOG', (event, args) => {
+    dialog.showMessageBox(win, args)
+  });
+
+  ipcMain.handle('SHOW_NOTIFICATION', (event, args) => {
+    new Notification(args).show();
+  });
+
+  win.on('close', (event) => {
+    if (!app.isExitForced) {
+      event.preventDefault();
+      win.hide();
+    }
+
+    return false;
+  })
+
+  const appTray = new Tray(path.join(__dirname, 'tray-icon.jpg'))
+  const trayCtxMenu = new Menu.buildFromTemplate([
+    { label: 'Open', click: () => win.show() },
+    { label: 'Exit', click: () => {
+      app.isExitForced = true;
+      app.quit();
+    }}
+  ])
+  appTray.setContextMenu(trayCtxMenu);
 
   if (process.env.NODE_ENV !== 'development') {
     // Load production build
