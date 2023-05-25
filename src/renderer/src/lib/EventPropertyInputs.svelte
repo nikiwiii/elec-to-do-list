@@ -1,11 +1,8 @@
 <script>
-<<<<<<< Updated upstream
-=======
     import { now } from "svelte/internal";
 	import { getContext } from 'svelte'
 	const { deleteTopEvent } = getContext('events')
 
->>>>>>> Stashed changes
     export let handleAddEvent;
 
 	let eventName = '';
@@ -18,8 +15,8 @@
         eventDate = '';
     };
 
-<<<<<<< Updated upstream
-=======
+    let cycleEnded = false
+    let repeat = false
     let countdown = "00:00"
     let timer = 10, minutes, seconds;
     let counting
@@ -64,7 +61,6 @@
         clearInterval(counting)
     }
 
->>>>>>> Stashed changes
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -96,8 +92,6 @@
     };
 </script>
 
-<<<<<<< Updated upstream
-=======
 <div class="countdown" style={cycleEnded ? "border-color: grey; " : "border-color: limegreen; "}>
     <h1 id="countdown">{countdown}</h1>
     <input type="checkbox" id="repeat" bind:value={repeat}>
@@ -108,7 +102,6 @@
     </div>
 </div>
 
->>>>>>> Stashed changes
 <form class="itemInput" on:submit="{handleSubmit}">
 	<input type="text" bind:value="{eventName}" name="event-name" placeholder="Event name" />
     <input type="datetime-local" bind:value="{eventDate}" name="event-date" />
@@ -131,51 +124,34 @@
 
 	.itemInput input {
 		flex: 1;
-<<<<<<< Updated upstream
-		border: 2px solid lightcoral;
-		border-radius: 0.25rem;
-		background-color: white;
-
-=======
         background-color: limegreen;
         color:rgb(20, 20, 20);
 		border-radius: 1rem;
         height: 30px;
         border: 0;
         padding: 0 10px;
->>>>>>> Stashed changes
 	}
 
     .itemInput textarea {
         grid-column: 1 / 3;
         min-height: 5rem;
-<<<<<<< Updated upstream
-=======
 		background-color: rgb(20, 20, 20);
 		border: 2px solid limegreen;
 		border-radius: 1rem;
         color: white;
         resize: vertical;
         padding: 10px;
->>>>>>> Stashed changes
     }
 
 	.itemInput button {
 		background-color: lightcoral;
 		border: 0;
-<<<<<<< Updated upstream
-		border-radius: 0.25rem;
-		color: white;
-=======
 		border-radius: 1rem;
         color: black;
->>>>>>> Stashed changes
         place-self: center;
         grid-column: 1 / 3;
         padding: 0.5rem 2rem;
 	}
-<<<<<<< Updated upstream
-=======
     .countdown {
         padding: 1rem 0;
         border-radius: 30px;
@@ -187,5 +163,4 @@
         margin-bottom: 1rem;
         padding: 1rem;
     }
->>>>>>> Stashed changes
 </style>

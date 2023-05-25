@@ -7,25 +7,13 @@
 	export let handleDeleteEndedEvent;
 </script>
 
-<<<<<<< Updated upstream
-<div>
-	{#each events as event (event.id)}
-		<div style:background={event.expired && 'rgba(255, 0, 0, 0.4)'}>
-			<h2>{event.name}</h2>
-			<p>{event.message}</p>
-			<h4>{new Date(event.reminderTimestamp).toLocaleString()}</h4>
-=======
 <div class="scroll-area">
 	<div style="display: flex; flex-direction: row">
 		{#each endedEvents as event (event.id)}
 		<div class="nah" style:background={event.expired && 'grey'}>
->>>>>>> Stashed changes
 			{#if event.expired}
 				<h5>&nbsp; E X P I R E D</h5>
 			{/if}
-<<<<<<< Updated upstream
-			<button on:click={() => handleDeleteEvent(event.id)}>Delete</button>
-=======
 			<div>
 				<p>Event name: </p>
 				<h2><s>{event.name}</s></h2>
@@ -54,17 +42,12 @@
 				<button on:click={() => handleDeleteEvent(event.id)}>Delete</button>
 			</div>
 			<!-- <Item title={item} index={index} onEdit={onEdit} onRemove={onRemove} /> -->
->>>>>>> Stashed changes
 		</div>
 		{/each}
 	</div>
 </div>
 
 <style>
-<<<<<<< Updated upstream
-	div {
-		border-top: 3px solid lightcoral;
-=======
 	.yuh, .nah {
 		background-color: limegreen;
 		border-radius: 1rem;
@@ -111,7 +94,6 @@
 	}
 	* {
 		font-weight: normal;
->>>>>>> Stashed changes
 	}
 	h5 {
 		width: min-content; 
