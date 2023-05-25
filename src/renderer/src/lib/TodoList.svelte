@@ -10,17 +10,14 @@
 <div class="scroll-area">
 	<div style="display: flex; flex-direction: row">
 		{#each endedEvents as event (event.id)}
-		<div class="nah" style:background={event.expired && 'grey'}>
-			{#if event.expired}
-				<h5>&nbsp; E X P I R E D</h5>
-			{/if}
+		<div class="nah">
 			<div>
 				<p>Event name: </p>
 				<h2><s>{event.name}</s></h2>
 				<p>Event message: </p>
 				<h2><s>{event.message}</s></h2>
 			</div>
-			<div style:background={event.expired && 'grey'}>
+			<div>
 				<p>Made on: </p>
 				<h2><s>{new Date(event.reminderTimestamp).toLocaleString()}</s></h2>
 				<button on:click={() => handleDeleteEndedEvent(event.id)}>Delete</button>
@@ -29,14 +26,17 @@
 		</div>
 		{/each}
 		{#each events as event (event.id)}
-		<div class="yuh">
+		<div class="yuh" style:background={event.expired && 'grey'}>
+			{#if event.expired}
+				<h5>&nbsp; E X P I R E D</h5>
+			{/if}
 			<div>
 				<p>Event name: </p>
 				<h2>{event.name}</h2>
 				<p>Event message: </p>
 				<h2>{event.message}</h2>
 			</div>
-			<div>
+			<div style:background={event.expired && 'grey'}>
 				<p>Made on: </p>
 				<h2>{new Date(event.reminderTimestamp).toLocaleString()}</h2>
 				<button on:click={() => handleDeleteEvent(event.id)}>Delete</button>
@@ -104,9 +104,10 @@
 		text-align: center
 	}
 	.scroll-area {
-		width: 600px; 
+		width: 75%; 
+		max-width: 600px;
 		overflow: hidden; 
-		overflow-x: auto;
+		overflow-x: scroll;
         margin: auto;
 	}
 	::-webkit-scrollbar {

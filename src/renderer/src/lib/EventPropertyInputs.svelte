@@ -8,20 +8,25 @@
 	let eventName = '';
     let eventMessage = '';
     let eventDate = '';
+    let repeat = false;
+    let cycleEnded = false
+    let sendNotif = true
+    let shitBoppinStill = false
 
     const clearInputs = () => {
         eventName = '';
         eventMessage = '';
         eventDate = '';
     };
-
-    let cycleEnded = false
-    let repeat = false
+    
     let countdown = "00:00"
     let timer = 10, minutes, seconds;
     let counting
     const originalTimer = timer
     const start = () => {
+        shitBoppinStill = true
+        console.log(repeat);
+        timer = originalTimer
         counting = setInterval(function () {
             minutes = parseInt(timer / 60, 10)
             seconds = parseInt(timer % 60, 10);
@@ -34,6 +39,7 @@
                 if (--timer < 0) {
                     cycleEnded = false
                     timer = duration;
+                    repeat = repeat
                 }
             }
             else {
@@ -48,7 +54,11 @@
 				        deleteTopEvent()
                         sendNotif = false
                     }
-                    if(repeat){
+                    if (!repeat) {
+                        shitBoppinStill = false
+                        reset()
+                    }
+                    else {
                         timer = 5, minutes, seconds
                     }
                 }
@@ -56,9 +66,13 @@
         }, 1000);
     }
     const reset = () => {
-        cycleEnded = false
-        countdown = "00:00"
         clearInterval(counting)
+        cycleEnded = false
+        countdown = "00:00"    
+        repeat = false;
+        cycleEnded = false
+        sendNotif = true
+        shitBoppinStill = false
     }
 
     const handleSubmit = (event) => {
@@ -94,10 +108,10 @@
 
 <div class="countdown" style={cycleEnded ? "border-color: grey; " : "border-color: limegreen; "}>
     <h1 id="countdown">{countdown}</h1>
-    <input type="checkbox" id="repeat" bind:value={repeat}>
+    <input type="checkbox" id="repeat" bind:checked={repeat}>
     <label for="repeat">Repeat cycle?</label>
     <div style="margin-top: 1rem;">
-        <button type="submit" on:click={() => start()}>Start</button>
+        <button type="submit" on:click={() => start()} disabled={shitBoppinStill}>Start</button>
         <button type="submit" on:click={() => reset()}>Reset</button>
     </div>
 </div>
@@ -143,15 +157,15 @@
         padding: 10px;
     }
 
-	.itemInput button {
-		background-color: lightcoral;
-		border: 0;
-		border-radius: 1rem;
+    button {
+        background-color: limegreen;
+        border: 0;
+        border-radius: 20px;
         color: black;
         place-self: center;
         grid-column: 1 / 3;
-        padding: 0.5rem 2rem;
-	}
+        padding: 8px 32px;
+    }
     .countdown {
         padding: 1rem 0;
         border-radius: 30px;
