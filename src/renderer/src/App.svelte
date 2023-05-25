@@ -31,8 +31,11 @@
 </main>
 
 <style>
+	* {
+		font-family: Arial, Helvetica, sans-serif;
+	}
 	main {
-		background-color: lightblue;
+		background-color: rgb(20, 20, 20);
 		margin: 0;
 		padding: 15px;
 		min-height: calc(100vh - 30px);
